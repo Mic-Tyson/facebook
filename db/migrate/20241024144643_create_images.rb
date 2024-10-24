@@ -1,7 +1,7 @@
 class CreateImages < ActiveRecord::Migration[7.2]
   def change
     create_table :images do |t|
-      t.references :uploader, null: false, foreign_key: true
+      t.references :uploader, null: false, foreign_key: { to_table: :users }
       t.references :imageable, polymorphic: true, null: false
       t.string :url
       t.string :caption

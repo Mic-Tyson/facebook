@@ -11,10 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "user_id", null: false
-    t.integer "parent_id", null: false
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "parent_id", null: false
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,8 +27,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.integer "follower_id", null: false
-    t.integer "followed_id", null: false
+    t.bigint "follower_id", null: false
+    t.bigint "followed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
@@ -34,9 +37,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.integer "uploader_id", null: false
+    t.bigint "uploader_id", null: false
     t.string "imageable_type", null: false
-    t.integer "imageable_id", null: false
+    t.bigint "imageable_id", null: false
     t.string "url"
     t.string "caption"
     t.datetime "created_at", null: false
@@ -46,9 +49,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "likable_type", null: false
-    t.integer "likable_id", null: false
+    t.bigint "likable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable"
@@ -56,7 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "author_id", null: false
+    t.bigint "author_id", null: false
     t.string "title"
     t.text "body"
     t.datetime "created_at", null: false
@@ -65,8 +68,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.integer "requester_id", null: false
-    t.integer "requested_id", null: false
+    t.bigint "requester_id", null: false
+    t.bigint "requested_id", null: false
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,7 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   add_foreign_key "comments", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
-  add_foreign_key "images", "uploaders"
+  add_foreign_key "images", "users", column: "uploader_id"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "requests", "users", column: "requested_id"
