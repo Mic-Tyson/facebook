@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_24_142455) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_24_144643) do
   create_table "comments", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "user_id", null: false
@@ -31,6 +31,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_142455) do
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.integer "uploader_id", null: false
+    t.string "imageable_type", null: false
+    t.integer "imageable_id", null: false
+    t.string "url"
+    t.string "caption"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"
+    t.index ["uploader_id"], name: "index_images_on_uploader_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -84,6 +96,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_142455) do
   add_foreign_key "comments", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "images", "uploaders"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "requests", "users", column: "requested_id"
