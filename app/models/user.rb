@@ -10,6 +10,12 @@ class User < ApplicationRecord
   has_many :following, through: :following_relationships, source: :followed
   has_many :followers, through: :follower_relationships, source: :follower
 
+  has_many :requester_relationships, class_name: "Request", foreign_key: "requester_id"
+  has_many :requesting_relationships, class_name: "Request", foreign_key: "requested_id"
+
+  has_many :requesting, through: :requesting_relationships, source: :requested
+  has_many :requesters, through: :requester_relationships, source: :requester
+
   has_many :posts, foreign_key: "author_id", inverse_of: :author
 
   has_many :likes, dependent: :destroy
