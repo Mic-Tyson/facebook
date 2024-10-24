@@ -6,6 +6,7 @@ gem "rails", "~> 7.2.1", ">= 7.2.1.2"
 gem "sprockets-rails"
 # Use psql as the database for Active Record
 gem 'pg'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -47,6 +48,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem "guard"
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
+  gem 'shoulda-matchers'
 end
 
 group :development do
