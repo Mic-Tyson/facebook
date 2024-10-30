@@ -1,0 +1,9 @@
+<h1>User <%= @user.id%> </h1>
+
+<% unless @user.posts.empty? %>
+  <%= @user.posts.each do |post| %>
+    <%= post.body %>
+  <% end %>
+<% else %>
+  <p>  User has no posts yet </p>
+<% end%>
