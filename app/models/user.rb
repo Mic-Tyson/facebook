@@ -4,14 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :follower_relationships, class_name: "Follow", foreign_key: "follower_id"
-  has_many :following_relationships, class_name: "Follow", foreign_key: "followed_id"
+  has_many :following_relationships, class_name: "Follow", foreign_key: "follower_id"
+  has_many :followed_relationships, class_name: "Follow", foreign_key: "followed_id"
 
   has_many :following, through: :following_relationships, source: :followed
   has_many :followers, through: :follower_relationships, source: :follower
 
-  has_many :requester_relationships, class_name: "Request", foreign_key: "requester_id"
-  has_many :requesting_relationships, class_name: "Request", foreign_key: "requested_id"
+  has_many :requesting_relationships, class_name: "Request", foreign_key: "requester_id"
+  has_many :requested_relationships, class_name: "Request", foreign_key: "requested_id"
 
   has_many :requesting, through: :requesting_relationships, source: :requested
   has_many :requesters, through: :requester_relationships, source: :requester
@@ -23,4 +23,26 @@ class User < ApplicationRecord
   has_many :comments
 
   has_many :images, foreign_key: :uploader_id
+
+  def follow(user)
+    return if user.nil? || following?(user) || user.id == self.id
+
+    follow = Follow.new
+    follow.follower_id = self.id
+    follow.followed_id = user.id
+    follow.save
+  end
+
+  def following?(user)
+    return false if user.nil?
+
+    following_relationships.exists?(followed_id: user.id)
+  end
+
+  def unfollow(user)
+    return if user.nil?
+
+    follow_record = following_relationships.find_by(followed_id: user.id)
+    follow_record.destroy
+  end
 end
