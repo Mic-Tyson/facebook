@@ -17,6 +17,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def follow(user)
+    @user.follow(user)
+  end
+
+  def like(likable)
+    @user.like(likeable)
+  end
+
   private
 
   def user_params
