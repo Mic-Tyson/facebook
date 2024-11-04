@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :requested_relationships, class_name: "Request", foreign_key: "requested_id"
 
   has_many :requesting, through: :requesting_relationships, source: :requested
-  has_many :requesters, through: :requester_relationships, source: :requester
+  has_many :requesters, through: :requested_relationships, source: :requester
 
   has_many :posts, foreign_key: "author_id", inverse_of: :author
 
@@ -49,7 +49,7 @@ class User < ApplicationRecord
     follow_record&.destroy
   end
 
-    def likes?(likable)
+  def likes?(likable)
     return false if likable.nil? || !likable.likable?
 
     likes.exists?(likable_id: likable.id)
@@ -69,5 +69,36 @@ class User < ApplicationRecord
     return if likable.nil? || !likable.likable? || !likes.exists?(likable_id: likable.id)
 
     likes.find_by(likable_id: likable.id)&.destroy
+  end
+
+  def requesting?(user)
+    return false if user.nil? || following?(user)
+
+    requesting_relationships.exists?(requested_id: user.id)
+  end
+
+  def request(user)
+    return nil if user.nil? || requesting?(user)
+
+    requesting_relationships.create(requested_id: user.id)
+  end
+
+  def unrequest(user)
+    return nil if user.nil? || following?(user) || !requesting?(user)
+
+    requesting_relationships.find_by(requested_id: user.id)&.destroy
+  end
+
+  def accept_request(user)
+    return nil unless user.requesting?(self)
+
+    user.follow(self)
+    requested_relationships.find_by(requester_id: user.id)&.destroy
+  end
+
+  def deny_request(user)
+    return nil unless user.requesting?(self)
+
+    requested_relationships.find_by(requester_id: user.id)&.destroy
   end
 end
