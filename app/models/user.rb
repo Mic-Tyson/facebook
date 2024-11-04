@@ -49,7 +49,7 @@ class User < ApplicationRecord
     follow_record&.destroy
   end
 
-  def likes?(likable)
+    def likes?(likable)
     return false if likable.nil? || !likable.likable?
 
     likes.exists?(likable_id: likable.id)

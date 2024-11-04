@@ -8,4 +8,26 @@ module ApplicationHelper
     end
     result.html_safe
   end
+
+  def display_follow_button(user)
+    return if current_user == user
+
+    if current_user.following?(user)
+      unfollow_button = button_to "Unfollow",
+        unfollow_user_path(current_user, user_id: user.id),
+        method: :delete,
+        remote: true,
+        class: "like-button"
+
+      content_tag(:div, unfollow_button, class: "follow-button-container", id: "follow_button_#{user.id}")
+    else
+      follow_button = button_to "Follow",
+        follow_user_path(current_user, user_id: user.id),
+        method: :post,
+        remote: true,
+        class: "like-button"
+
+      content_tag(:div, follow_button, class: "follow-button-container", id: "follow_button_#{user.id}")
+    end
+  end
 end

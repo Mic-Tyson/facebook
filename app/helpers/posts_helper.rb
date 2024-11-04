@@ -7,7 +7,13 @@ module PostsHelper
 
       likes_div = content_tag(:div, "#{comment.likes.count} likes", class: "likes")
 
-      content_tag(:div, "#{comment_div} #{user_div} #{likes_div}".html_safe, class: "comment-container")
+      like_button = button_to "Like #{comment.likes.count}",
+        like_user_path(comment_id: comment.id),
+        method: :post,
+        remote: true,
+        class: "like-button"
+
+      content_tag(:div, "#{comment_div} #{user_div} #{likes_div} #{like_button}".html_safe, class: "comment-container")
     end.join.html_safe
   end
 end
