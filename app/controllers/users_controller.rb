@@ -17,17 +17,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def follow
-    @target = User.find_by(id: params[:user_id])
+  FOLLOW_ACTIONS = %w[follow unfollow request_follow unrequest_follow accept_follow_request deny_follow_request]
 
-    current_user.follow(@target)
+  FOLLOW_ACTIONS.each do |action|
+  define_method(action) do
+  @target = User.find_by(id: params[:user_id]) || User.find_by(id: params[:id])
+  current_user.send(action, @target) if @target
+    end
   end
 
-  def unfollow
-    @target = User.find_by(id: params[:user_id])
-
-    current_user.unfollow(@target)
-  end
 
   def like
     likable = find_likable_type(params)
@@ -44,6 +42,7 @@ class UsersController < ApplicationController
 
   private
   LIKABLE_TYPES = %w[Post Comment]
+  # FOLLOW_ACTIONS = %w[follow unfollow request unrequest deny_request accept_request]
 
   def user_params
     params.require(:user).permit(%i[username email password bio pfp_url])
