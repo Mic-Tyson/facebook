@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def likes?(likable)
-    return false if likable.nil? || !likeable.likable?
+    return false if likable.nil? || !likable.likable?
 
     likes.exists?(likable_id: likable.id, user_id: self.id)
   end
@@ -58,7 +58,11 @@ class User < ApplicationRecord
   def like(likable) 
     return if likable.nil? || !likable.likable?
 
-    likes.create(likable: likable)
+    if likes?(likeable)
+      unlike(likable)
+    else
+      likes.create(likable: likable)
+    end
   end
 
   def unlike(likable)
