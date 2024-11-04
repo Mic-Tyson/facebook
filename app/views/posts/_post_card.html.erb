@@ -1,0 +1,16 @@
+<div class="post-card">
+  <a href="<%= post_path(post) %>"><h2><%= post.title %></h2></a>
+  <div class="post-author-info">
+    <p>
+      by <a href="<%= user_path(post.author) %>"><%= post.author.username %></a> 
+      <%= link_to "Follow", user_path(post.author), method: :post, remote: true, class: "follow-button" %>
+    </p> 
+  </div>
+  <p><%= post.body.truncate(100) %></p>
+  <div class="post-actions">
+    <%= button_to "Like #{post.likes.count}", post_path(post), method: :post, remote: true, class: "like-button" %>
+  </div>
+  <div class="post-comments">
+    <%= display_card_comments(post.comments) %>
+  </div>
+</div>

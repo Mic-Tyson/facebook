@@ -1,8 +1,9 @@
-<h1>User <%= @user.id%> </h1>
+<h1> <%= "#{@user.username}'s profile" %> </h1>
 
 <% unless @user.posts.empty? %>
-  <%= @user.posts.each do |post| %>
-    <%= post.body %>
+  <h3> <%= "#{@user.username}'s posts " %> </h3>
+  <% @user.posts.each do |post| %>
+    <%= render partial: "posts/post_card", locals: { post: post } %>
   <% end %>
 <% else %>
   <p>  User has no posts yet </p>

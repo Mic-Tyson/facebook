@@ -1,3 +1,6 @@
 <h1><%= @post.title %></h1>
 <h3>by <%= @post.author.username%></h3>
 <p><%= @post.body %></p>
+
+<h3>Comments</h3>
+<%= display_all_comments(@post.comments) %>

@@ -18,6 +18,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'templates/homebar' %>
+    <div id="content" data-turbo-frame="main">
+      <%= yield %>
+    </div>
   </body>
 </html>
