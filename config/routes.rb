@@ -16,9 +16,13 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      post :follow
-      delete :unfollow
       post :like, to: "users#like"
+      post :follow, to: "users#follow"
+      delete :unfollow, to: "users#unfollow"
+      post :request_follow, to: "users#request_follow"
+      delete :unrequest_follow, to: "users#unrequest_follow"
+      post :accept_follow_request, to: "users#accept_follow_request"
+      delete :deny_follow_request, to: "users#deny_follow_request"
     end
   end
 
