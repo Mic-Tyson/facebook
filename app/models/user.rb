@@ -24,6 +24,12 @@ class User < ApplicationRecord
 
   has_many :images, foreign_key: :uploader_id
 
+  def following_posts
+    Post.where(author_id: following.pluck(:id))
+        .order(created_at: :desc)
+        .distinct
+  end
+
   def follow(user)
     return if user.nil? || following?(user) || user.id == self.id
 
@@ -41,5 +47,23 @@ class User < ApplicationRecord
 
     follow_record = following_relationships.find_by(followed_id: user.id)
     follow_record&.destroy
+  end
+
+  def likes?(likable)
+    return false if likable.nil? || !likeable.likable?
+
+    likes.exists?(likable_id: likable.id, user_id: self.id)
+  end
+
+  def like(likable) 
+    return if likable.nil? || !likable.likable?
+
+    likes.create(likable: likable)
+  end
+
+  def unlike(likable)
+    return if likable.nil? || !likable.likable? || !likes.exists?(likable_id: likable.id)
+
+    likes.find_by(likable_id: likable.id)&.destroy
   end
 end
