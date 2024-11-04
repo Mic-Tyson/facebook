@@ -1,6 +1,7 @@
 <h1><%= @post.title %></h1>
 <h3>by <%= @post.author.username%></h3>
+<%= display_follow_button(@post.author)%>
 <p><%= @post.body %></p>
-
+<%= button_to "Like #{@post.likes.count}", like_user_path(post_id: @post.id), method: :post, remote: true, class: "like-button" %>
 <h3>Comments</h3>
 <%= display_all_comments(@post.comments) %>
