@@ -1,16 +1,20 @@
 <div class="post-card">
-  <a href="<%= post_path(post) %>"><h2><%= post.title %></h2></a>
+  <a href="<%= post_path(post) %>" class="post-title-link">
+    <h2 class="post-title"><%= post.title %></h2>
+  </a>
+  
   <div class="post-author-info">
-    <p>
-      by <a href="<%= user_path(post.author) %>"><%= post.author.username %></a> 
-      <%= display_follow_button(post.author) %>
-      <%= "following" if current_user.following? post.author%>
-    </p> 
+    <span>by</span>
+    <a href="<%= user_path(post.author) %>" class="author-link"><%= post.author.username %></a> 
+    <span class="follow-button-wrapper"><%= display_follow_button(post.author) %></span>
   </div>
-  <p><%= post.body.truncate(100) %></p>
+
+  <p class="post-body"><%= post.body.truncate(100) %></p>
+
   <div class="post-actions">
     <%= button_to "Like #{post.likes.count}", like_user_path(current_user, post_id: post.id), method: :post, remote: true, class: "like-button" %>
   </div>
+
   <div class="post-comments">
     <%= display_card_comments(post.comments) %>
   </div>

@@ -17,10 +17,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+<body>
+  <div class="main-container">
     <%= render 'templates/homebar' %>
-    <div id="content" data-turbo-frame="main">
-      <%= yield %>
+    <div class="content-wrapper">
+      <div id="content" data-turbo-frame="main">
+        <%= yield %>
+      </div>
+      <%= render 'templates/sidebar' %>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
