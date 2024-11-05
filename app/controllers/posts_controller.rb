@@ -16,4 +16,24 @@ class PostsController < ApplicationController
       format.html { render :index } # non-turbo
     end
   end
+
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new(post_params)
+
+    if @post.save
+      redirect_to post_path(@post)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:body, :title).merge(author_id: current_user.id)
+  end
 end
