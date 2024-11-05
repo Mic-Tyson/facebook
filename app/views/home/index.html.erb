@@ -3,6 +3,7 @@
   <h1>Latest from Following</h1>
   <%= turbo_frame_tag 'posts' do %>
     <div>
+      <% @posts = Post.order(created_at: :desc) %>
       <% @posts.each do |post| %>
         <%= render partial: "posts/post_card", locals: { post: post } %>
       <% end %>

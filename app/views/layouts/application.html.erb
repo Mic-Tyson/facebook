@@ -24,7 +24,9 @@
       <div id="content" data-turbo-frame="main">
         <%= yield %>
       </div>
-      <%= render 'templates/sidebar' %>
+      <% if current_user %>
+        <%= render 'templates/sidebar'%>
+      <%end%>
     </div>
   </div>
 </body>
