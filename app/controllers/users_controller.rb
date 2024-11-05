@@ -26,6 +26,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def remove_follower
+    @target = User.find_by(id: params[:id])
+
+    @target.unfollow(current_user)
+  end
+
 
   def like
     likable = find_likable_type(params)
