@@ -23,12 +23,14 @@ Rails.application.routes.draw do
       delete :unrequest_follow, to: "users#unrequest_follow"
       post :accept_follow_request, to: "users#accept_follow_request"
       delete :deny_follow_request, to: "users#deny_follow_request"
+      delete :remove_follower, to: "users#remove_follower"
     end
   end
 
   resources :comments
 
   resources :posts do
+    resources :comments, only: [ :create, :destroy, :edit ]
     collection do
       get :search
     end
