@@ -1,0 +1,42 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h3>Follow Requests</h3>
+  </div>
+  <div class="follow-requests">
+    <h4>Incoming Requests</h4>
+    <ul>
+      <% current_user.requesters.each do |requester| %>
+        <li>
+          <a class="username" href="<%= user_path(requester) %>"><%= requester.username %></a>
+          <div class="button-group">
+            <%= accept_request_button(requester) %>
+            <%= deny_request_button(requester) %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <h4>Following</h4>
+    <ul>
+      <% current_user.following.each do |follow| %>
+        <li>
+          <a class="username" href="<%= user_path(follow) %>"><%= follow.username %></a>
+          <div class="button-group">
+            <%= display_follow_button(follow) %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <h4>Followers</h4>
+    <ul>
+      <% current_user.followers.each do |follower| %>
+        <li>
+          <a class="username" href="<%= user_path(follower) %>"><%= follower.username %></a>
+          <div class="button-group">
+            <%= delete_follower_button(follower) %>
+            <%= display_follow_button(follower) %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
