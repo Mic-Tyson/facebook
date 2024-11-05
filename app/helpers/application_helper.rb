@@ -18,6 +18,34 @@ module ApplicationHelper
     content_tag(:div, button, class: "follow-button-container", id: "follow_button_#{user.id}")
   end
 
+  def delete_follower_button(user)
+    return nil if user == current_user || !user.following?(current_user)
+
+    action = "Remove"
+    path = remove_follower_user_path(user)
+
+    button = button_to(action, path, method: :delete, class: "unfollow-button")
+
+    content_tag(:div, button, class: "follow-button-container", id: "remove_follow_button_#{user.id}")
+  end
+
+  def accept_request_button(user)
+    path = accept_follow_request_user_path(user)
+
+    button = button_to("Accept", path, method: :post, class: "accept-request-button")
+
+    content_tag(:div, button, class: "request-button-container", id: "accept_request_button_#{user.id}")
+  end
+
+  def deny_request_button(user)
+    path = deny_follow_request_user_path(user)
+
+    button = button_to("Deny", path, method: :delete, class: "deny-request-button")
+
+    content_tag(:div, button, class: "request-button-container", id: "deny_request_button_#{user.id}")
+  end
+
+
   private
 
   def determine_follow_action(user)
