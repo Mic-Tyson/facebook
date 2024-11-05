@@ -9,6 +9,20 @@ module PostsHelper
     content_tag(:div, comments_html, class: "comments-container")
   end
 
+  def post_comment_field(post)
+    return unless current_user
+
+    content_tag(:div, class: "comment-form-container") do
+      form_with(model: [ @post, Comment.new ], url: post_comments_path(@post), local: true, class: "comment-form") do |form|
+        content_tag(:div, class: "comment-input-group") do
+          form.hidden_field(:user_id, value: current_user.id) +
+          form.text_area(:body, placeholder: "Share your thoughts...", class: "comment-input") +
+          form.submit("Comment", class: "comment-submit-button")
+        end
+      end
+    end
+  end
+
   private
 
   def display_single_comment(comment)
