@@ -5,6 +5,7 @@
   
   <div class="post-author-info">
     <span>by</span>
+    <img src="<%= post.author.pfp_url %>" alt="<%= post.author.username %> profile picture" class="mini-profile-picture">
     <a href="<%= user_path(post.author) %>" class="author-link"><%= post.author.username %></a> 
     <span class="follow-button-wrapper"><%= display_follow_button(post.author) %></span>
   </div>
