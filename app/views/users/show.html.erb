@@ -1,10 +1,29 @@
-<h1> <%= "#{@user.username}'s profile" %> </h1>
+<div class="profile-container">
+  <div class="profile-header">
+    <h1 class="username-heading"><%= "#{@user.username}'s Profile" %></h1>
+    <div class="profile-info">
+      <img src="<%= @user.pfp_url %>" alt="<%= @user.username %>'s profile picture" class="profile-picture">
+      <p class="bio-text"><%= @user.bio %></p>
+    </div>
+    <% if @user == current_user %>
+      <%= link_to "Edit Profile", edit_user_registration_path %>
+    <% end %>
+  </div>
 
-<% unless @user.posts.empty? %>
-  <h3> <%= "#{@user.username}'s posts " %> </h3>
-  <% @user.posts.each do |post| %>
-    <%= render partial: "posts/post_card", locals: { post: post } %>
+  <% if @user.posts.any? %>
+    <div class="posts-section">
+      <h3 class="posts-heading"><%= "#{@user.username}'s Posts" %></h3>
+      <div class="posts-list">
+        <% @user.posts.order(created_at: :desc).each do |post| %>
+          <%= render partial: "posts/post_card", locals: { post: post } %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <p class="no-posts-message">User has no posts yet.</p>
   <% end %>
-<% else %>
-  <p>  User has no posts yet </p>
-<% end%>
+
+  <% if @user == current_user%>
+    <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <% end %>
+</div>

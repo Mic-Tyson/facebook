@@ -1,12 +1,13 @@
 <nav class="sidebar">
   <div class="sidebar-header">
-    <h3>Follow Requests</h3>
+    <h3></h3>
   </div>
   <div class="follow-requests">
     <h4>Incoming Requests</h4>
     <ul>
       <% current_user.requesters.each do |requester| %>
         <li>
+          <img src="<%= requester.pfp_url %>" alt="<%= requester.username %> profile picture" class="mini-profile-picture">
           <a class="username" href="<%= user_path(requester) %>"><%= requester.username %></a>
           <div class="button-group">
             <%= accept_request_button(requester) %>
@@ -19,6 +20,7 @@
     <ul>
       <% current_user.following.each do |follow| %>
         <li>
+          <img src="<%= follow.pfp_url %>" alt="<%= follow.username %> profile picture" class="mini-profile-picture">
           <a class="username" href="<%= user_path(follow) %>"><%= follow.username %></a>
           <div class="button-group">
             <%= display_follow_button(follow) %>
@@ -30,6 +32,7 @@
     <ul>
       <% current_user.followers.each do |follower| %>
         <li>
+          <img src="<%= follower.pfp_url %>" alt="<%= follower.username %> profile picture" class="mini-profile-picture">
           <a class="username" href="<%= user_path(follower) %>"><%= follower.username %></a>
           <div class="button-group">
             <%= delete_follower_button(follower) %>

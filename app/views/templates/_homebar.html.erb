@@ -13,7 +13,10 @@
     </li>
     <li><%= link_to "Create", new_post_path %></li>
     <% if current_user %>
-      <li><%= link_to "Profile", user_path(current_user) %></li>
+      <div class="profile-nav">
+        <%= link_to "Profile", user_path(current_user), class: "profile-link" %>
+        <%= image_tag(current_user.pfp_url, alt: "#{current_user.username}'s profile picture", class: "profile-nav-picture") if current_user.pfp_url.present? %>
+      </div>
     <% end %>
   </ul>
 </nav>
