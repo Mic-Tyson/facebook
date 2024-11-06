@@ -28,7 +28,8 @@ module PostsHelper
   def display_single_comment(comment)
     comment_div = content_tag(:div, comment.body, class: "comment")
     user_likes_reply_div = content_tag(:div, class: "user-likes-reply") do
-      user_div = content_tag(:div, "- " + comment.user.username, class: "username")
+      img_div = image_tag(comment.user.pfp_url || "#{comment.user.username} profile picture", class: "comment-profile-picture")
+      user_div = content_tag(:div, comment.user.username, class: "comment-username")
       like_button = button_to "Like #{comment.likes.count}",
                             like_user_path(comment_id: comment.id),
                             method: :post,
@@ -38,7 +39,7 @@ module PostsHelper
                                 class: "reply-button",
                                 data: { action: "click->reply-form#toggle" }
 
-      safe_join([ user_div, like_button, reply_button ])
+      safe_join([ "- ", img_div, user_div, like_button, reply_button ])
     end
 
     reply_form = content_tag(:div, class: "reply-form-container", style: "display: none;", data: { reply_form_target: "formContainer" }) do
