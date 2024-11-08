@@ -5,6 +5,8 @@
   <h1 class="post-title"><%= @post.title %></h1>
   <h3 class="post-author">by <%= @post.author.username %></h3>
   <%= display_follow_button(@post.author) %>
+
+  <%= image_tag @post.file, class: "post-full-img" if @post.file.attached? %>
   <p class="post-body"><%= @post.body %></p>
   <div class="post-actions">
     <%= button_to "Like #{@post.likes.count}", like_user_path(post_id: @post.id), method: :post, remote: true, class: "like-button" %>

@@ -18,7 +18,10 @@
     <div class="field" data-controller="avatar">
       <%= f.label :pfp_url, "Profile Picture", class: "field-label" %><br />
       <%= f.text_field :pfp_url, placeholder: "Profile picture URL", class: "input-text", data: { target: "avatar.urlField"} %>
-      <%= f.file_field :avatar, id: "avatar", data: { target: "avatar.fileInput", action: "change->avatar#handleFileSelect" } %>
+      <%= f.file_field :avatar,
+                       id: "avatar", 
+                       accept: "image/png, image/jpg, image/jpeg, image/gif"
+                       data: { target: "avatar.fileInput", action: "change->avatar#handleFileSelect" } %>
       <button type="button" data-target="avatar.removeButton" style="display: none;" data-action="click->avatar#removeFile">
         Use URL Instead
       </button>

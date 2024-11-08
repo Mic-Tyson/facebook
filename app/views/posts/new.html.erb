@@ -12,6 +12,11 @@
       <%= form.text_area :body, class: "form-textarea", rows: 5 %>
     </div>
 
+    <div class="form-group">
+      <%= form.label :file, "Add an Image", class: "form-label" %>
+      <%= form.file_field :file, class: "form-file", accept: "image/png, image/jpg, image/jpeg, image/gif" %>
+    </div>
+
     <div class="form-actions">
       <%= form.submit "Create Post", class: "form-submit-button" %>
     </div>
