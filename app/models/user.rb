@@ -24,6 +24,8 @@ class User < ApplicationRecord
 
   has_many :images, foreign_key: :uploader_id
 
+  has_one_attached :avatar
+
   def following_posts
     Post.where(author_id: following.pluck(:id))
         .order(created_at: :desc)
