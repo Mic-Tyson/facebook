@@ -829,3 +829,24 @@ body {
   margin-right: 2px;
   vertical-align: middle;
 }
+
+.post-main {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  max-width: 800px;
+}
+
+.post-author-info {
+  max-width: 20%;
+}
+
+.post-img {
+  max-height: 187px;
+  min-height: 187px;
+}
+
+.post-full-img {
+  max-height: 400px;
+  padding-left: 20px;
+}
