@@ -3,8 +3,12 @@
 
 <div class="post-container">
   <h1 class="post-title"><%= @post.title %></h1>
-  <h3 class="post-author">by <%= @post.author.username %></h3>
-  <%= display_follow_button(@post.author) %>
+  <div class="post-author-info">
+        <span>by</span>
+        <a href="<%= user_path(@post.author) %>" class="author-link"><%= @post.author.username %></a> 
+        <img src="<%= @post.author.pfp_url %>" alt="<%= @post.author.username %> profile picture" class="mini-profile-picture">
+        <span class="follow-button-wrapper"><%= display_follow_button(@post.author) %></span>
+  </div>
 
   <%= image_tag @post.file, class: "post-full-img" if @post.file.attached? %>
   <p class="post-body"><%= @post.body %></p>
