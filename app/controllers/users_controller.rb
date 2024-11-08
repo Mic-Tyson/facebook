@@ -7,16 +7,6 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
   end
 
-  def create
-    @user = User.new user_params
-
-    if @user.save
-      redirect_to @user, notice: "Account creation successful!"
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
   FOLLOW_ACTIONS = %w[follow unfollow request_follow unrequest_follow accept_follow_request deny_follow_request]
 
   FOLLOW_ACTIONS.each do |action|
