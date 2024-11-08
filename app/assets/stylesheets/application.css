@@ -473,7 +473,6 @@ body {
 }
 
 .homebar li {
-  display: inline; /* Inline list items */
   margin-right: 20px; /* Spacing between items */
 }
 
@@ -849,4 +848,15 @@ body {
 .post-full-img {
   max-height: 400px;
   padding-left: 20px;
+}
+
+.sidebar {
+  margin-right: -20px;
+  max-width: 300px;
+}
+
+.header {
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }
