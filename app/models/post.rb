@@ -5,5 +5,7 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
-  has_many :images, as: :imageable
+  has_many :images, as: :imageable # unused for now
+
+  has_one_attached :file
 end
