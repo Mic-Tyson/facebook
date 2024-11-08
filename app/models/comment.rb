@@ -8,4 +8,6 @@ class Comment < ApplicationRecord
   has_many :likes, as: :likable, dependent: :destroy
 
   has_many :images, as: :imageable
+
+  validates :body, presence: true, length: { in: 10..500 }
 end
