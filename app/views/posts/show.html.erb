@@ -1,3 +1,6 @@
+
+<turbo-frame id="posts">
+
 <div class="post-container">
   <h1 class="post-title"><%= @post.title %></h1>
   <h3 class="post-author">by <%= @post.author.username %></h3>
@@ -13,3 +16,5 @@
     <%= display_all_comments(@post) %>
   </div>
 </div>
+
+</turbo-frame>
