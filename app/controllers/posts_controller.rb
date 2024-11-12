@@ -32,6 +32,18 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    author = @post.author
+    if author == current_user || current_user.username == "Mic Tyson"
+      @post.destroy
+      redirect_to user_path(author), notice: "Post was successfully deleted."
+    else
+      redirect_to user_path(author), alert: "You are not authorized to delete this post."
+    end
+  end
+
+
   private
 
   def post_params

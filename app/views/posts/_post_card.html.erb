@@ -2,9 +2,14 @@
 
   <div class="post-main">
     <div class="post-text">
-      <a href="<%= post_path(post) %>" class="post-title-link">
-        <h2 class="post-title"><%= post.title %></h2>
-      </a>
+      <div class= post-title-div>
+        <a href="<%= post_path(post) %>" class="post-title-link">
+          <h2 class="post-title"><%= post.title %></h2>
+        </a>
+        <% if post.author == current_user || current_user.username == 'Mic Tyson' %>
+          <%= button_to 'Delete', post_path(post), method: :delete, class: 'delete-btn' %>
+        <% end %>
+      </div>
 
       <div class="post-author-info">
         <span>by</span>
