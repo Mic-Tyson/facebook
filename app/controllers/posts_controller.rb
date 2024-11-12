@@ -43,7 +43,6 @@ class PostsController < ApplicationController
     end
   end
 
-S
   private
 
   def post_params
