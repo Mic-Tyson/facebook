@@ -26,6 +26,8 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  validate :avatar_size
+
   def following_posts
     Post.where(author_id: following.pluck(:id))
         .order(created_at: :desc)
@@ -102,5 +104,16 @@ class User < ApplicationRecord
     return if likable.nil? || !likable.likable? || !likes.exists?(likable_id: likable.id)
 
     likes.find_by(likable_id: likable.id)&.destroy
+  end
+
+  private
+
+  def avatar_size
+    return unless avatar.attached?
+
+    if avatar.blob.byte_size > 3.megabytes
+      avatar.purge
+      errors.add(:avatar, "should be less than 3MB")
+    end
   end
 end

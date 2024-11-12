@@ -11,4 +11,17 @@ class Post < ApplicationRecord
 
   validates :body, presence: true, length: { in: 10..5000 }
   validates :title, presence: true, length: { in: 10..200 }
+
+  validate :max_file_size
+
+  private
+
+  def max_file_size
+    return unless file.attached?
+
+    if file.blob.byte_size > 5.megabytes
+      file.purge
+      errors.add(:file, "should be less than 5MB")
+    end
+  end
 end
